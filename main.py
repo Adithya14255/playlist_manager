@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from flask import json
-from random import randint
-from time import gmtime,time
 from flask_sqlalchemy import SQLAlchemy as _BaseSQLAlchemy
 
 
@@ -12,7 +10,7 @@ app = Flask(__name__)
 app.secret_key='dev'
 
 songs = [
-    { 'id':'1','title': 'song.mp3', 'description': 'Cats acting weird' },
+    { 'id':'1','title': 'leo song','path':'song.mp3'},
     { 'id':'2','title': '80\'s Music', 'description': 'Don\'t stop believing!' },
     { 'id':'3','title': 'song', 'description': 'Don\'t stop believing!' }
 ]
