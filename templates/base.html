@@ -6,10 +6,28 @@
   <title>Playlister</title>
 </head>
 <body>
-
+    <h1>Playlists</h1>
+    {% for playlist in playlists %}
+        <h2>{{ playlist.title }}</h2>
+        <small>{{ playlist.description }}</small>
+        <form action="{{ url_for('addplaylist',id=playlist.id)}}" method="post">
+            <button class="button" type="submit">Submit</button>
+        </form>
+    {% endfor %}
+    <h1>Current playlist</h1>
+    {% for playlist in current_playlists %}
+    <h2>{{ playlist.title }}</h2>
+    <small>{{ playlist.description }}</small>
+    <form action="{{ url_for('removeplaylist',id=playlist.id)}}" method="post">
+        <button class="button" type="submit">Submit</button>
+    </form>
+{% endfor %}
+<form action="{{ url_for('play')}}" method="post">
+    <button class="button" type="submit">PLAY</button>
     {% block content %}
         BODY CONTENT GOES HERE
     {% endblock %}
-
+    <br><br><br><br><br>
+  
 </body>
 </html>
