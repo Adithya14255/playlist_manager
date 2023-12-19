@@ -2,8 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from flask import json
 from flask_sqlalchemy import SQLAlchemy as _BaseSQLAlchemy
-
-
+import random
+from time import *
 
 app = Flask(__name__)
 
@@ -11,11 +11,12 @@ app.secret_key='dev'
 
 songs = [
     { 'id':'1','title': 'leo song','path':'song.mp3'},
-    { 'id':'2','title': '80\'s Music', 'description': 'Don\'t stop believing!' },
-    { 'id':'3','title': 'song', 'description': 'Don\'t stop believing!' }
+    { 'id':'2','title': '80\'s Music','path':'song2.mp3' },
+    { 'id':'3','title': 'song','path':'song3.mp3' }
 ]
 
 current_playlists=[]
+
 @app.route('/',methods=['GET', 'POST'])
 def index():
     """Return homepage."""
@@ -46,11 +47,17 @@ def removeplaylist(id):
         # change the original return statement you wrote to the one below
         return redirect(url_for('index'))
 
-@app.route('/play',methods=['GET', 'POST'])
-def play():
-        return render_template('play.html',list=current_playlists)
-            
-        
+@app.route('/play/<int:id>',methods=['GET', 'POST'])
+def play(id):
+        if id==1:
+            copy_playlist = random.sample(current_playlists, len(current_playlists))
+            return render_template('play.html',songs=copy_playlist)
+             
+        return render_template('play.html',songs=current_playlists)
+
+@app.route('/trial',methods=['GET', 'POST'])
+def trial():
+       print("hello",gmtime(time()))
     
 
 if __name__ == '__main__':

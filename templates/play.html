@@ -1,19 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Music Player</title>
 </head>
-
 <body>
-    {% for playlist in list %}
-    <h2>{{ playlist.title }}</h2>
-    <small>{{ playlist.description }}</small>
-    <audio controls autoplay src="{{ url_for('static',filename='')}}{{playlist.title}}">
-    {% endfor %}
-   
-</body>
+    <h1>Music Player</h1>
+    <ul id="playlist">
 
+        {% for song in songs %}
+            <li data-src="{{url_for('static',filename='')}}{{ song.path }}" data-id="{{ loop.index }}">{{ song.title }}</li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('play',id=1)}}" method="post">
+            <button class="button" type="submit">Shuffle</button>
+        </form>
+        <audio id="audioPlayer" controls></audio>
+    
+        <script>
+            var playlist = document.getElementById('playlist').getElementsByTagName('li');
+            var audioPlayer = document.getElementById('audioPlayer');
+            var currentSong = 0;
+    
+            function playSong(index) {
+                audioPlayer.src = playlist[index].dataset.src;
+                audioPlayer.play();
+            }
+    
+            playSong(currentSong);
+    
+            audioPlayer.addEventListener('ended', function () {
+                currentSong = (currentSong + 1) % playlist.length;
+                playSong(currentSong);
+            });
+    
+            for (var i = 0; i < playlist.length; i++) {
+                playlist[i].addEventListener('click', function () {
+                    currentSong = parseInt(this.dataset.id) - 1; // parse as integer and adjust for 0-based index
+                    playSong(currentSong);
+                });
+            }
+    </script>
+</body>
 </html>

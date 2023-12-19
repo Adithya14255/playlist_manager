@@ -4,7 +4,85 @@
 <head>
   <meta charset='utf-8'>
   <title>Playlister</title>
+<style>
+    /* styles.css */
+
+/* Reset default margin and padding */
+body, h1, h2, small, button {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a pleasant background color or pattern */
+body {
+    background-color: #f5f5f5; /* Light gray background */
+    /* Or use a background pattern/image */
+    /* background-image: url('your-pattern.png'); */
+}
+
+/* Style the playlist titles */
+h1, h2 {
+    font-family: Arial, sans-serif;
+    color: #333; /* Dark gray text color */
+}
+
+/* Add some spacing between elements */
+h1, h2, small, button {
+    margin-bottom: 10px;
+}
+
+/* Style the buttons */
+button {
+    background-color: #0074d9; /* Blue button color */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #005cbf; /* Darker blue on hover */
+}
+
+/* Center the PLAY button */
+button[type="submit"] {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Add some spacing at the bottom */
+br {
+    display: block;
+    margin-bottom: 20px;
+}
+
+
+audio {
+      width: 300px;
+      padding: 10px;
+      border: 2px solid #ecf0f1; /* White border */
+      border-radius: 8px;
+      background-color: #34495e; /* Dark gray background */
+      color: #ecf0f1; /* White text */
+      outline: none;
+    }
+
+    audio::-webkit-media-controls-panel {
+      background-color: #34495e; /* Dark gray background */
+      border-radius: 8px;
+      color: #ecf0f1; /* White icons */
+    }
+
+    audio::-webkit-media-controls-play-button,
+    audio::-webkit-media-controls-pause-button,
+    audio::-webkit-media-controls-timeline {
+      color: #ecf0f1; /* White icons */
+    }
+</style>
 </head>
+
+
 <body>
     <h1>Playlists</h1>
     {% for playlist in playlists %}
@@ -22,7 +100,7 @@
         <button class="button" type="submit">Submit</button>
     </form>
 {% endfor %}
-<form action="{{ url_for('play')}}" method="post">
+<form action="{{ url_for('play',id=0)}}" method="post">
     <button class="button" type="submit">PLAY</button>
     {% block content %}
         BODY CONTENT GOES HERE
