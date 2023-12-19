@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy as _BaseSQLAlchemy
 import random
 from time import *
 
+
+
 app = Flask(__name__)
 
 app.secret_key='dev'
@@ -58,6 +60,7 @@ def play(id):
 @app.route('/trial',methods=['GET', 'POST'])
 def trial():
        print("hello",gmtime(time()))
+       return "hello"
     
 
 if __name__ == '__main__':
