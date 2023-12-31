@@ -54,7 +54,6 @@ def play(id):
         if id==1:
             copy_playlist = random.sample(current_playlists, len(current_playlists))
             return render_template('play.html',songs=copy_playlist)
-             
         return render_template('play.html',songs=current_playlists)
 
 @app.route('/trial',methods=['GET', 'POST'])

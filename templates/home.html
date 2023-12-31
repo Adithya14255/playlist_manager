@@ -1,7 +1,35 @@
 <!-- templates/home.html -->
+<style>
+    .content h1 {
+
+        font-size: 24px;
+
+        text-align: center;
+
+        margin-top: 30px;
+
+    }
+
+
+
+    audio {
+
+        display: block;
+
+        width: 100%;
+
+        max-width: 600px;
+
+        margin: 20px auto;
+
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    }
+</style>
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{{ msg }}</h1>
-    <audio controls autoplay src="{{ url_for('static',filename='')}}{{msg}}">
-{% endblock %}
+<form action="{{ url_for('play',id=0)}}" method="post">
+    <button class="button" type="submit">PLAY</button>
+
+    {% endblock %}
