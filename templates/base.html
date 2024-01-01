@@ -6,19 +6,16 @@
     <meta charset='utf-8'>
     <title>Playlister</title>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Abel" />
+
     <style>
         body {
-
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
+            font-family: "Abel";
             margin: 0px;
             padding: 0px;
             background-image: url("{{url_for('static',filename='bg.jpg')}}");
             background-repeat: no-repeat;
             background-size: cover;
-            color: #333;
-            background-color: darkgrey;
-
         }
 
         .navi {
@@ -35,117 +32,64 @@
             text-align: center;
             padding: 14px 20px;
             text-decoration: none;
-            font-size: 20px;
-            margin-top: 70px;
+            font-size: 30px;
+            margin-top:50px;
             font-weight: lighter;
             margin-right: 40px;
         }
 
         .navi a:hover {
             color: darkgrey;
-            padding: 30px;
             transition: .5s;
         }
 
         .navi img {
-            margin-top: 0px;
+            margin-top: 20px;
+            margin-bottom: 20px;
             margin-left: 20px;
             padding: 0px;
-            height: 200px;
-            width: 200px;
+            height: 120px;
+            width: 240px;
         }
 
-        h1,
-        h2 {
-
-            color: #333;
-
+        .audio-info{
+            display: flex;
         }
-
-
-
-        small {
-
-            display: block;
-
-            margin-bottom: 10px;
-
-            color: #666;
-
-        }
-
-
-
-        form {
-
-            margin-bottom: 20px;
-
-        }
-
-
-
-        .button {
-
-            display: inline-block;
-
-            padding: 10px 20px;
-
-            cursor: pointer;
-
-            color: #fff;
-
-            border: none;
-
-            border-radius: 5px;
-
-            transition: background 0.3s ease;
-
-        }
-
-
-
-        .button:hover {
-
-            background: #449d44;
-
-        }
-
         .custom-audio-controls {
             display: flex;
+            background: rgba(0, 0, 0, 0.5);
             align-items: center;
-            background-color: #fff;
             border-radius: 8px;
             padding: 16px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin:auto;
         }
 
-        .play-pause-btn {
-            background-color: #4CAF50;
-            color: #fff;
+        #play-pause-btn {
             border: none;
-            border-radius: 4px;
+            background: transparent;
+            color:white;
             padding: 8px;
             cursor: pointer;
             margin-right: 10px;
-            font-size: 14px;
+            font-size: 24px;
         }
 
         input[type="range"] {
             -webkit-appearance: none;
-            width: 100%;
+            width: 600px;
             height: 4px;
-            background: #ddd;
             outline: none;
             border-radius: 2px;
             margin: 0;
         }
+        
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 16px;
             height: 16px;
-            background: #4CAF50;
+            background: grey;
             border-radius: 50%;
             cursor: pointer;
         }
@@ -154,34 +98,63 @@
             width: 100%;
             margin-top: 10px;
         }
-    </style>
 
+        .content {
+            width:auto;
+            display: flex;
+            color:white;
+            background-color: transparent;
+            backdrop-filter: blur(20px);
+        }
+
+        .playlist {
+            text-align: center;
+            border:2px solid white;
+            width: 45%;
+            margin-left:2.5%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container{
+            list-style: none;
+            margin:0px;
+            padding:20px;
+            font-size: 30px;
+            font-weight: 200;
+            display: flex;
+
+        }
+
+        .button:hover{
+            color:darkslategrey;
+            transition:0.5s;
+        }
+        .text{
+            width:95%;
+            text-align:left;
+        }
+        .text1{
+            text-align:right;
+        }
+        .button{
+            background-color: transparent;
+            color: white;
+            border:none;
+            font-size: 20px;
+        }
+        
+        
     </style>
 </head>
 
 
 <body>
+    <script src="https://kit.fontawesome.com/a190768d0b.js" crossorigin="anonymous"></script>
     <div class="navi">
         <img src="{{url_for('static',filename='logo.png')}}">
         <a class="active" href="{{ url_for('play',id=0)}}">LOGIN</a>
     </div>
-    <h1>Playlists</h1>
-    {% for playlist in playlists %}
-    <h2>{{ playlist.title }}</h2>
-    <small>{{ playlist.description }}</small>
-    <form action="{{ url_for('addplaylist',id=playlist.id)}}" method="post">
-        <button class="button" type="submit">Submit</button>
-    </form>
-    {% endfor %}
-    <h1>Current playlist</h1>
-    {% for playlist in current_playlists %}
-    <h2>{{ playlist.title }}</h2>
-    <small>{{ playlist.description }}</small>
-    <form action="{{ url_for('removeplaylist',id=playlist.id)}}" method="post">
-        <button class="button" type="submit">Submit</button>
-    </form>
-    {% endfor %}
-
+   
     {% block content %}
     BODY CONTENT GOES HERE
     {% endblock %}

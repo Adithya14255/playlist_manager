@@ -12,9 +12,16 @@ app = Flask(__name__)
 app.secret_key='dev'
 
 songs = [
-    { 'id':'1','title': 'leo song','path':'song.mp3'},
-    { 'id':'2','title': '80\'s Music','path':'song2.mp3' },
-    { 'id':'3','title': 'song','path':'song3.mp3' }
+    { 'id':'1','title': 'Alan Walker, Sabrina Carpenter & Farruko  - On My Way','path':'Alan Walker, Sabrina Carpenter & Farruko  - On My Way.mp3'},
+    { 'id':'2','title': 'Hans Zimmer & Alan Walker - Time (Official Remix)','path':'Hans Zimmer & Alan Walker - Time (Official Remix).mp3' },
+    { 'id':'3','title': 'Disfigure - Blank _ Melodic Dubstep _ NCS ','path':'Disfigure - Blank _ Melodic Dubstep _ NCS - Copyright Free Music.mp3' },
+    { 'id':'4','title': 'Alan Walker - Faded.mp3 ','path':'Alan Walker - Faded.mp3' },
+    { 'id':'5','title': 'Alan Walker - The Spectre','path':'Alan Walker - The Spectre.mp3' },
+    { 'id':'6','title': 'Alan Walker & K-391 - Ignite (Lyrics) ft. Julie Bergan & Seungri','path':'Alan Walker & K-391 - Ignite (Lyrics) ft. Julie Bergan & Seungri.mp3' },
+    { 'id':'7','title': 'Metro Boomin, A$AP Rocky, Roisee - Am I Dreaming (Visualizer)','path':'Metro Boomin, A$AP Rocky, Roisee - Am I Dreaming (Visualizer).mp3' },
+    { 'id':'8','title': 'Alok & Alan Walker - Headlight (Fajar Asia Remix)','path':'Alok & Alan Walker - Headlight (Fajar Asia Remix).mp3' },
+    { 'id':'9','title': 'Alan Walker & Hernandz - Endless Sea  (Official Music Video)','path':'Alan Walker & Hernandz - Endless Sea  (Official Music Video).mp3' },
+    { 'id':'10','title': 'Alan Walker - Alone','path':'Alan Walker - Alone.mp3' }
 ]
 
 current_playlists=[]
@@ -56,11 +63,6 @@ def play(id):
             return render_template('play.html',songs=copy_playlist)
         return render_template('play.html',songs=current_playlists)
 
-@app.route('/trial',methods=['GET', 'POST'])
-def trial():
-       print("hello",gmtime(time()))
-       return "hello"
-    
 
 if __name__ == '__main__':
     app.run(debug=True)

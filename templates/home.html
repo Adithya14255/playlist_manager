@@ -1,34 +1,39 @@
 <!-- templates/home.html -->
-<style>
-    .content h1 {
-
-        font-size: 24px;
-
-        text-align: center;
-
-        margin-top: 30px;
-
-    }
-
-
-
-    audio {
-
-        display: block;
-
-        width: 100%;
-
-        max-width: 600px;
-
-        margin: 20px auto;
-
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-    }
-</style>
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="content">
+    <div class="playlist">
+        <h1>Latest Hits</h1>
+        <ul class="container">
+            <li class="text">Title</li>
+            <li class="text1">Add</li>
+        </ul>
+        {% for playlist in playlists %}
+        <ul class="container">
+            <li class="text">{{ playlist.title }}</li>
+            <form action="{{ url_for('addplaylist',id=playlist.id)}}" method="post">
+                <button class="button" type="submit"><i class="fa-solid fa-plus"></i></button>
+            </form>
+        </ul>
+        {% endfor %}
+    </div>
+    <div class="playlist">
+        <h1>Your Playlist</h1>
+        <ul class="container">
+            <li class="text">Title</li>
+            <li class="text1">remove</li>
+        </ul>
+        {% for playlist in current_playlists %}
+        <ul class="container">
+            <li class="text">{{ playlist.title }}</li>
+            <form action="{{ url_for('removeplaylist',id=playlist.id)}}" method="post">
+                <button class="button" type="submit"><i class="fa-solid fa-minus"></i></button>
+            </form>
+        </ul>
+        {% endfor %}
+    </div>
+</div>
 <form action="{{ url_for('play',id=0)}}" method="post">
     <button class="button" type="submit">PLAY</button>
 
