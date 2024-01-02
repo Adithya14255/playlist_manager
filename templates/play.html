@@ -3,147 +3,142 @@
 {% block content %}
 <script src="https://kit.fontawesome.com/a190768d0b.js" crossorigin="anonymous"></script>
 <form action="{{ url_for('play',id=1)}}" method="post">
-  <button class="button" type="submit">Shuffle</button>
+    <button class="button" type="submit">Shuffle</button>
 </form>
-
-<div class="content">
-  <div class="playlist" style="border:none;">
-    <h1>Your Playlist</h1>
-    <ul class="container">
-      <li class="text">Title</li>
-    </ul>
-    {% for playlist in songs %}
-    <ul class="container">
-      <li class="text">{{ playlist.title }}</li>
-    </ul>
+<ul id="playlist">
+    {% for song in songs %}
+    <li data-src="{{url_for('static',filename='')}}{{ song.path }}" data-id="{{ loop.index }}" style="display:none;"></li>
     {% endfor %}
-    <ul id="playlist">
-      {% for song in songs %}
-      <li data-src="{{url_for('static',filename='')}}{{ song.path }}" data-id="{{ loop.index }}" style="display:none;">
-      </li>
+</ul>
+<div class="content">
+  <div class="playlist" style="border:none;font-size:12px;">
+      <h1>Your Playlist</h1>
+      <ul class="container">
+          <li class="text" style="font-size:18px;">Title</li>
+      </ul>
+      {% for playlist in songs %}
+      <ul class="container">
+          <li class="text" style="font-size:18px;">{{ playlist.title }}</li>
+      </ul>
       {% endfor %}
-    </ul>
-  </div>
-  <div class="custom-audio-controls">
-  <li id="s1" value=""></li>
-    <div class="audio-info">
-
-      <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
     </div>
-    <button id="play-pause-btn" class="next-prev-btn" onclick="playPrevious()"><i
-        class="fa-solid fa-backward-step"></i></button>
-    <button id="play-pause-btn" class="play-pause-btn" onclick="togglePlayPause()"> <i id="playPauseButton"
-        class="fas fa-play"></i></button>
-    <button id="play-pause-btn" class="next-prev-btn" onclick="playNext()"><i
-        class="fa-solid fa-forward-step"></i></button>
-    <input type="range" id="seek" value="0" onchange="changeSeek(this.value)">
-    <button id="play-pause-btn"><i class="fa-solid fa-volume-high"></i></button>
-    <input type="range" id="volume" value="100" onchange="changeVolume(this.value)" style="width:20%;">
+    <div class="playlist" style="border:none;font-size:12px;">
+    <div class="player">
+      <marquee behavior="" direction=""><p class="name" id="result" style="font-size:30px;" ></p></marquee>
+      <div class="custom-audio-controls">
+        
+        <div class="audio-info">
+          
+          <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
+        </div>
+        <button id="play-pause-btn" class="next-prev-btn" onclick="playPrevious()"><i class="fa-solid fa-backward-step"></i></button>
+        <button id="play-pause-btn" class="play-pause-btn" onclick="togglePlayPause()"> <i id="playPauseButton" class="fas fa-play"></i></button>
+        <button id="play-pause-btn" class="next-prev-btn" onclick="playNext()"><i class="fa-solid fa-forward-step"></i></button>
+       
+        <input type="range" id="seek" value="0" onchange="changeSeek(this.value)">
+        <button id="play-pause-btn"><i class="fa-solid fa-volume-high"></i></button>
+        <input type="range" id="volume" value="100" onchange="changeVolume(this.value)" style="width:20%;">
     <audio id="audioPlayer"></audio>
-
+  </div>
   </div>
 </div>
+    </div>
+    
 
 <script>
-  var playlist = document.getElementById('playlist').getElementsByTagName('li');
-  var audioPlayer = document.getElementById('audioPlayer');
-  var currentSong = 0;
+    var playlist = document.getElementById('playlist').getElementsByTagName('li');
+    var audioPlayer = document.getElementById('audioPlayer');
+    var currentSong = 0;
 
-  function getSong(index) {
-    document.getElementById('s1').value = playlist[index].dataset.src;
-  }
-  function playSong(index) {
-    audioPlayer.src = playlist[index].dataset.src;
-    audioPlayer.play();
-  }
 
-  playSong(currentSong);
-
-  audioPlayer.addEventListener('ended', function () {
-    currentSong = (currentSong + 1) % playlist.length;
-    playSong(currentSong);
-    getSong(currentSong);
-  });
-
-  for (var i = 0; i < playlist.length; i++) {
-    playlist[i].addEventListener('click', function () {
-      currentSong = parseInt(this.dataset.id) - 1; // parse as integer and adjust for 0-based index
-      playSong(currentSong);
-      getSong(currentSong);
-
-    });
-  }
-  const audio = document.getElementById('audioPlayer');
-  const playPauseBtn = document.querySelector('.play-pause-btn');
-  const seekSlider = document.getElementById('seek');
-  const currentTimeSpan = document.getElementById('currentTime');
-  const totalTimeSpan = document.getElementById('totalTime');
-
-  function togglePlayPause() {
-    var playPauseButton = document.getElementById('playPauseButton');
-
-    // Check the current state
-    if (audio.paused) {
-      audio.play();
-      playPauseButton.classList.remove('fa-play');
-      playPauseButton.classList.add('fa-pause');
-    } else {
-      audio.pause();
-      playPauseButton.classList.remove('fa-pause');
-      playPauseButton.classList.add('fa-play');
-      // Add logic for pause action
-      pauseAction();
+    function playSong(index) {
+        audioPlayer.src = playlist[index].dataset.src;
+        audioPlayer.play();
+        var jinjaLikeSyntax = playlist[index].dataset.src;
+        document.getElementById("result").innerHTML = jinjaLikeSyntax.slice(8,-4);
     }
-  }
 
-
-  function changeVolume(value) {
-    audio.volume = value / 100;
-  }
-
-  function changeSeek(value) {
-    const duration = audio.duration;
-    audio.currentTime = (value / 100) * duration;
-  }
-
-  function updateSeekSlider() {
-    const duration = audio.duration;
-    const currentTime = audio.currentTime;
-    const progress = (currentTime / duration) * 100;
-    seekSlider.value = progress;
-
-    const formattedCurrentTime = formatTime(currentTime);
-    const formattedTotalTime = formatTime(duration);
-    currentTimeSpan.textContent = formattedCurrentTime;
-    totalTimeSpan.textContent = formattedTotalTime;
-  }
-
-  function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = Math.floor(seconds % 60);
-    const formattedTime = `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-    return formattedTime;
-  }
-
-  function playNext() {
-    currentSong = (currentSong + 1) % playlist.length;
     playSong(currentSong);
-    getSong(currentSong);
 
-    resetSeekSlider();
-  }
+    audioPlayer.addEventListener('ended', function () {
+        currentSong = (currentSong + 1) % playlist.length;
+        playSong(currentSong);
+    });
 
-  function playPrevious() {
-    currentSong = (currentSong - 1) % playlist.length;
-    getSong(currentSong);
-    playSong(currentSong);
-    resetSeekSlider();
-  }
+    for (var i = 0; i < playlist.length; i++) {
+        playlist[i].addEventListener('click', function () {
+            currentSong = parseInt(this.dataset.id) - 1; // parse as integer and adjust for 0-based index
+            playSong(currentSong);
+        });
+    }
+    const audio = document.getElementById('audioPlayer');
+    const playPauseBtn = document.querySelector('.play-pause-btn');
+    const seekSlider = document.getElementById('seek');
+    const currentTimeSpan = document.getElementById('currentTime');
+    const totalTimeSpan = document.getElementById('totalTime');
 
-  function resetSeekSlider() {
-    seekSlider.value = 0;
-  }
+    function togglePlayPause() {
+      var playPauseButton = document.getElementById('playPauseButton');
 
-  audio.addEventListener('timeupdate', updateSeekSlider);
+      // Check the current state
+      if (audio.paused) {
+        audio.play();
+        playPauseButton.classList.remove('fa-play');
+        playPauseButton.classList.add('fa-pause');
+      } else {
+        audio.pause();
+        playPauseButton.classList.remove('fa-pause');
+        playPauseButton.classList.add('fa-play');
+        // Add logic for pause action
+        pauseAction();
+      }
+    }
+
+
+    function changeVolume(value) {
+      audio.volume = value / 100;
+    }
+
+    function changeSeek(value) {
+      const duration = audio.duration;
+      audio.currentTime = (value / 100) * duration;
+    }
+
+    function updateSeekSlider() {
+      const duration = audio.duration;
+      const currentTime = audio.currentTime;
+      const progress = (currentTime / duration) * 100;
+      seekSlider.value = progress;
+
+      const formattedCurrentTime = formatTime(currentTime);
+      const formattedTotalTime = formatTime(duration);
+      currentTimeSpan.textContent = formattedCurrentTime;
+      totalTimeSpan.textContent = formattedTotalTime;
+    }
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = Math.floor(seconds % 60);
+      const formattedTime = `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+      return formattedTime;
+    }
+
+    function playNext() {
+        currentSong = (currentSong + 1) % playlist.length;
+        playSong(currentSong);
+        resetSeekSlider();
+    }
+
+    function playPrevious() {
+        currentSong = (currentSong - 1) % playlist.length;
+        playSong(currentSong);
+      resetSeekSlider();
+    }
+
+    function resetSeekSlider() {
+      seekSlider.value = 0;
+    }
+
+    audio.addEventListener('timeupdate', updateSeekSlider);
 </script>
 {% endblock %}
