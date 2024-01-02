@@ -2,9 +2,7 @@
 
 {% block content %}
 <script src="https://kit.fontawesome.com/a190768d0b.js" crossorigin="anonymous"></script>
-<form action="{{ url_for('play',id=1)}}" method="post">
-    <button class="button" type="submit">Shuffle</button>
-</form>
+
 <ul id="playlist">
     {% for song in songs %}
     <li data-src="{{url_for('static',filename='')}}{{ song.path }}" data-id="{{song.img}}" style="display:none;"></li>
@@ -12,9 +10,16 @@
 </ul>
 <div class="content">
   <div class="playlist" style="border:none;font-size:12px;">
-      <h1>Your Playlist</h1>
+   <ul class="bar">
+    <li class="text" style="font-size: 26px;font-weight: 400;">Your Playlist</li>
+    <form action="{{ url_for('play',id=1)}}" method="post">
+            <li><button class="button" type="submit" style="margin-top:10px; float:right;"><i class="fa-solid fa-shuffle"></i></button></li>
+  </form>
+</ul>
+      
       <ul class="container">
-          <li class="text" style="font-size:18px;text-align: center;">Title</li>
+        
+          <li class="text" style="font-size:23px;text-align: center;">Title</li>
       </ul>
       {% for playlist in songs %}
       <ul class="container">
@@ -29,12 +34,15 @@
       <marquee behavior="" direction=""><p class="name" id="result" style="font-size:30px;" ></p></marquee>
       <div class="custom-audio-controls">
         
-        <div class="audio-info">
-          
-          <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
+        <div class="audio-info" >
+          <ul class="container">
+          <li class="text"><p style="font-size: 20px;" id="currentTime">0:00</p></li>
+          <li class="text"><p>/</p></li>
+          <li class="text"><p style="font-size: 20px;"  id="totalTime">0:00</p></li>
+          </ul>
         </div>
         <button id="play-pause-btn" class="next-prev-btn" onclick="playPrevious()"><i class="fa-solid fa-backward-step"></i></button>
-        <button id="play-pause-btn" class="play-pause-btn" onclick="togglePlayPause()"> <i id="playPauseButton" class="fas fa-play"></i></button>
+        <button id="play-pause-btn" class="play-pause-btn" onclick="togglePlayPause()"> </button>
         <button id="play-pause-btn" class="next-prev-btn" onclick="playNext()"><i class="fa-solid fa-forward-step"></i></button>
        
         <input type="range" id="seek" value="0" onchange="changeSeek(this.value)">

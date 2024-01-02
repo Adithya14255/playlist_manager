@@ -20,10 +20,17 @@
         {% endfor %}
     </div>
     <div class="playlist">
-        <h1>Your Playlist</h1>
+        <ul class="container">
+            <li class="text">Your Playlist</li>
+            <li class="text1">PLAY</li>
+            <form action="{{ url_for('play',id=0)}}" method="post">
+               <li class="text1"> <button class="button" type="submit" style="margin-top: 0px;"> <i id="playPauseButton" class="fas fa-play"></i></button></li>
+            </form>
+        </ul>
+        
         <ul class="container">
             <li class="text" style="text-align: center;">Title</li>
-            <li class="text1">remove</li>
+            <li class="text1">Remove</li>
         </ul>
         {% for playlist in current_playlists %}
         <ul class="container">
@@ -37,6 +44,6 @@
     </div>
 </div>
 <form action="{{ url_for('play',id=0)}}" method="post">
-    <button class="button" type="submit">PLAY</button>
-
+    <button class="button" type="submit"><i id="playPauseButton" class="fas fa-pause"></i></button>
+</form>
     {% endblock %}
