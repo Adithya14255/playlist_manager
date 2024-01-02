@@ -7,23 +7,25 @@
 </form>
 <ul id="playlist">
     {% for song in songs %}
-    <li data-src="{{url_for('static',filename='')}}{{ song.path }}" data-id="{{ loop.index }}" style="display:none;"></li>
+    <li data-src="{{url_for('static',filename='')}}{{ song.path }}" data-id="{{song.img}}" style="display:none;"></li>
     {% endfor %}
 </ul>
 <div class="content">
   <div class="playlist" style="border:none;font-size:12px;">
       <h1>Your Playlist</h1>
       <ul class="container">
-          <li class="text" style="font-size:18px;">Title</li>
+          <li class="text" style="font-size:18px;text-align: center;">Title</li>
       </ul>
       {% for playlist in songs %}
       <ul class="container">
+        <img src="{{url_for('static',filename='')}}{{ playlist.img }}" width="80px" height="80px">
           <li class="text" style="font-size:18px;">{{ playlist.title }}</li>
       </ul>
       {% endfor %}
     </div>
     <div class="playlist" style="border:none;font-size:12px;">
     <div class="player">
+      <img id="icon" src="" height="500px" width="500px">
       <marquee behavior="" direction=""><p class="name" id="result" style="font-size:30px;" ></p></marquee>
       <div class="custom-audio-controls">
         
@@ -46,6 +48,7 @@
     
 
 <script>
+    var list = JSON.parse('{{ songs|tojson|safe}}');
     var playlist = document.getElementById('playlist').getElementsByTagName('li');
     var audioPlayer = document.getElementById('audioPlayer');
     var currentSong = 0;
@@ -54,6 +57,9 @@
     function playSong(index) {
         audioPlayer.src = playlist[index].dataset.src;
         audioPlayer.play();
+        var curr=list[index];
+        var currentImagePath = '{{ url_for("static", filename="") }}'+curr.img;
+        document.getElementById("icon").src = currentImagePath;
         var jinjaLikeSyntax = playlist[index].dataset.src;
         document.getElementById("result").innerHTML = jinjaLikeSyntax.slice(8,-4);
     }

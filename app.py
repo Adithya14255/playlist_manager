@@ -1,10 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-import sqlite3
-from flask import json
+from flask import Flask, render_template, redirect, url_for,request
 import random
-from time import *
-
-
 
 app = Flask(__name__)
 

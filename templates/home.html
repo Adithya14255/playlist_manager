@@ -6,12 +6,12 @@
     <div class="playlist">
         <h1>Latest Hits</h1>
         <ul class="container">
-            <li class="text">Title</li>
+            <li class="text" style="text-align: center;">Title</li>
             <li class="text1">Add</li>
         </ul>
-        {% for playlist in playlists %}0
+        {% for playlist in playlists %}
         <ul class="container">
-            <img src="{{url_for('static',filename='')}}{{ playlist.img }}" width="30px" height="30px" style="box-shadow:0 4px 8px rgba(0, 0, 0, 0.1);">
+            <img src="{{url_for('static',filename='')}}{{ playlist.img }}" width="80px" height="80px">
             <li class="text">{{ playlist.title }}</li>
             <form action="{{ url_for('addplaylist',id=playlist.id)}}" method="post">
                 <button class="button" type="submit"><i class="fa-solid fa-plus"></i></button>
@@ -22,11 +22,12 @@
     <div class="playlist">
         <h1>Your Playlist</h1>
         <ul class="container">
-            <li class="text">Title</li>
+            <li class="text" style="text-align: center;">Title</li>
             <li class="text1">remove</li>
         </ul>
         {% for playlist in current_playlists %}
         <ul class="container">
+            <img src="{{url_for('static',filename='')}}{{ playlist.img }}" width="80px" height="80px">
             <li class="text">{{ playlist.title }}</li>
             <form action="{{ url_for('removeplaylist',id=playlist.id)}}" method="post">
                 <button class="button" type="submit"><i class="fa-solid fa-minus"></i></button>
