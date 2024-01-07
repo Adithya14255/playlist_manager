@@ -42,7 +42,7 @@
           </ul>
         </div>
         <button id="play-pause-btn" class="next-prev-btn" onclick="playPrevious()"><i class="fa-solid fa-backward-step"></i></button>
-        <button id="play-pause-btn" class="play-pause-btn" onclick="togglePlayPause()"> </button>
+        <button id="play-pause-btn" class="play-pause-btn" onclick="togglePlayPause()"><i id="playPauseButton" class="fa-solid fa-pause"></i></button>
         <button id="play-pause-btn" class="next-prev-btn" onclick="playNext()"><i class="fa-solid fa-forward-step"></i></button>
        
         <input type="range" id="seek" value="0" onchange="changeSeek(this.value)">
@@ -92,17 +92,17 @@
     const totalTimeSpan = document.getElementById('totalTime');
 
     function togglePlayPause() {
-      var playPauseButton = document.getElementById('playPauseButton');
+      var playPauseBtn = document.getElementById('playPauseButton');
 
       // Check the current state
       if (audio.paused) {
         audio.play();
-        playPauseButton.classList.remove('fa-play');
-        playPauseButton.classList.add('fa-pause');
+        playPauseBtn.classList.remove('fa-play');
+        playPauseBtn.classList.add('fa-pause');
       } else {
         audio.pause();
-        playPauseButton.classList.remove('fa-pause');
-        playPauseButton.classList.add('fa-play');
+        playPauseBtn.classList.remove('fa-pause');
+        playPauseBtn.classList.add('fa-play');
         // Add logic for pause action
         pauseAction();
       }
