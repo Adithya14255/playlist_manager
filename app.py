@@ -15,7 +15,8 @@ songs = [
     { 'id':'7','img':'dreaming.jpg','title': 'Metro Boomin, A$AP Rocky, Roisee - Am I Dreaming (Visualizer)','path':'Metro Boomin, A$AP Rocky, Roisee - Am I Dreaming (Visualizer).mp3' },
     { 'id':'8','img':'headlight.jpg','title': 'Alok & Alan Walker - Headlight (Fajar Asia Remix)','path':'Alok & Alan Walker - Headlight (Fajar Asia Remix).mp3' },
     { 'id':'9','img':'endless.jpg','title': 'Alan Walker & Hernandz - Endless Sea  (Official Music Video)','path':'Alan Walker & Hernandz - Endless Sea  (Official Music Video).mp3' },
-    { 'id':'10','img':'spectre.jpg','title': 'Alan Walker - Alone','path':'Alan Walker - Alone.mp3' }
+    { 'id':'10','img':'spectre.jpg','title': 'Alan Walker - Alone','path':'Alan Walker - Alone.mp3' },
+    { 'id':'11','img':'thiruchitrambalam-tamil-2022.webp','title': 'Thenmozhi - Dhanush','path':'Thenmozhi - Dhanush.mp3' }
 ]
 
 current_playlists=[]
